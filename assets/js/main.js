@@ -2,12 +2,6 @@
 	// Schedule Template - by CodyHouse.co
 	function ScheduleTemplate( element ) {
 		this.element = element;
-		this.timelineItems = this.element.getElementsByClassName('cd-schedule__timeline')[0].getElementsByTagName('li');
-		this.timelineStart = getScheduleTimestamp(this.timelineItems[0].textContent);
-		this.timelineUnitDuration = getScheduleTimestamp(this.timelineItems[1].textContent) - getScheduleTimestamp(this.timelineItems[0].textContent);
-		
-		this.topInfoElement = this.element.getElementsByClassName('cd-schedule__top-info')[0];
-		this.singleEvents = this.element.getElementsByClassName('cd-schedule__event');
 		
 		this.modal = this.element.getElementsByClassName('cd-schedule-modal')[0];
 		this.modalHeader = this.element.getElementsByClassName('cd-schedule-modal__header')[0];
@@ -24,11 +18,16 @@
 
 		this.animating = false;
 		this.supportAnimation = Util.cssSupports('transition');
-
-		this.initSchedule();
 	};
 
 	ScheduleTemplate.prototype.initSchedule = function() {
+		this.timelineItems = this.element.getElementsByClassName('cd-schedule__timeline')[0].getElementsByTagName('li');
+		this.timelineStart = getScheduleTimestamp(this.timelineItems[0].textContent);
+		this.timelineUnitDuration = getScheduleTimestamp(this.timelineItems[1].textContent) - getScheduleTimestamp(this.timelineItems[0].textContent);
+		
+		this.topInfoElement = this.element.getElementsByClassName('cd-schedule__top-info')[0];
+		this.singleEvents = this.element.getElementsByClassName('cd-schedule__event');
+
 		this.scheduleReset();
 		this.initEvents();
 	};
@@ -112,7 +111,7 @@
 		this.modal.setAttribute('data-event', target.getAttribute('data-event'));
 
 		//update event content
-		this.loadEventContent(target.getAttribute('data-content'));
+		this.loadEventContent(target.getAttribute('data-description'));
 
 		Util.addClass(this.modal, 'cd-schedule-modal--open');
 		
@@ -288,21 +287,15 @@
 		}
 	};
 
-	ScheduleTemplate.prototype.loadEventContent = function(content) {
-		// load the content of an event when user selects it
+	ScheduleTemplate.prototype.loadEventContent = function(description) {
+		// Get the event content from the data-description attribute
 		var self = this;
-
-		httpRequest = new XMLHttpRequest();
-		httpRequest.onreadystatechange = function() {
-			if (httpRequest.readyState === XMLHttpRequest.DONE) {
-	      if (httpRequest.status === 200) {
-	      	self.modal.getElementsByClassName('cd-schedule-modal__event-info')[0].innerHTML = self.getEventContent(httpRequest.responseText); 
-	      	Util.addClass(self.modal, 'cd-schedule-modal--content-loaded');
-	      }
-	    }
-		};
-		httpRequest.open('GET', content+'.html');
-    httpRequest.send();
+		var content = description;
+		
+		if(content) {
+			self.modal.getElementsByClassName('cd-schedule-modal__event-info')[0].innerHTML = '<div>' + content + '</div>';
+			Util.addClass(self.modal, 'cd-schedule-modal--content-loaded');
+		}
 	};
 
 	ScheduleTemplate.prototype.getEventContent = function(string) {
@@ -368,4 +361,7 @@
 			resizing = false;
 		};
 	}
+
+	// Make ScheduleTemplate globally available
+	window.ScheduleTemplate = ScheduleTemplate;
 }());

@@ -163,20 +163,16 @@ class ConferenceScheduleGenerator {
 
   createDaySection(day) {
     const dayRow = document.createElement('div');
-    dayRow.className = 'row mb-5';
+    dayRow.className = 'mb-5';
     
-    // Day title column
-    const titleCol = document.createElement('div');
-    titleCol.className = 'col-12 mb-3';
-    
+    // Day title
     const dayTitle = document.createElement('div');
-    dayTitle.className = 'day-title';
+    dayTitle.className = 'day-title mb-3';
     dayTitle.innerHTML = `
       <h2 class="day-name">${day.name}</h2>
       <p class="day-date text-muted">${day.date}</p>
     `;
-    titleCol.appendChild(dayTitle);
-    dayRow.appendChild(titleCol);
+    dayRow.appendChild(dayTitle);
 
     // Get halls for this specific day
     let dayHalls = this.selectedHalls.length > 0
@@ -190,18 +186,13 @@ class ConferenceScheduleGenerator {
     }
 
     if (dayHalls.length === 0) {
-      const noHallsCol = document.createElement('div');
-      noHallsCol.className = 'col-12';
-      noHallsCol.innerHTML = '<div class="alert alert-warning">No halls available for this day with current filters.</div>';
-      dayRow.appendChild(noHallsCol);
+      const noHallsMsg = document.createElement('div');
+      noHallsMsg.innerHTML = '<div class="alert alert-warning">No halls available for this day with current filters.</div>';
+      dayRow.appendChild(noHallsMsg);
     } else {
-      // Schedule table column
-      const scheduleCol = document.createElement('div');
-      scheduleCol.className = 'col-12';
-      
+      // Schedule table
       const scheduleTable = this.createScheduleTable([day], dayHalls);
-      scheduleCol.appendChild(scheduleTable);
-      dayRow.appendChild(scheduleCol);
+      dayRow.appendChild(scheduleTable);
     }
 
     return dayRow;
@@ -233,7 +224,7 @@ class ConferenceScheduleGenerator {
       const hallHeader = document.createElement('th');
       hallHeader.className = 'hall-column';
       hallHeader.innerHTML = `
-        <div class=\"hall-header\">\n          <div class=\"hall-name\">${hall.name}</div>\n        </div>\n      `;
+        <div class="hall-header">\n          <div class="hall-name">${hall.name}</div>\n        </div>\n      `;
       headerRow.appendChild(hallHeader);
     });
     
@@ -306,7 +297,13 @@ class ConferenceScheduleGenerator {
     table.appendChild(tbody);
     scrollContainer.appendChild(table);
     tableContainer.appendChild(scrollContainer);
-    
+
+    // --- Floating time column logic ---
+    setTimeout(() => {
+      this.createFloatingTimeColumn(tableContainer, scrollContainer, table);
+    }, 0);
+    // --- End floating time column logic ---
+
     return tableContainer;
   }
 
@@ -508,6 +505,83 @@ class ConferenceScheduleGenerator {
     }
     // Relative path (relative to current page)
     return window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/') + url;
+  }
+
+  /**
+   * Creates a floating time column that mimics the time column and stays on the left when scrolling horizontally.
+   */
+  createFloatingTimeColumn(tableContainer, scrollContainer, table) {
+    // Remove any previous floating column
+    const prev = tableContainer.querySelector('.floating-time-column');
+    if (prev) prev.remove();
+
+    // Get all time cells (header and body)
+    const timeHeader = table.querySelector('th.time-column');
+    const timeCells = Array.from(table.querySelectorAll('td.time-cell'));
+    if (!timeHeader || timeCells.length === 0) return;
+
+    // Create floating column container
+    const floatingCol = document.createElement('div');
+    floatingCol.className = 'floating-time-column';
+    floatingCol.style.position = 'absolute';
+    floatingCol.style.top = '0';
+    floatingCol.style.left = '0';
+    floatingCol.style.width = timeHeader.offsetWidth + 'px';
+    floatingCol.style.pointerEvents = 'none';
+    floatingCol.style.zIndex = '100';
+    floatingCol.style.background = 'none';
+    floatingCol.style.display = 'none';
+
+    // Clone header
+    const headerClone = timeHeader.cloneNode(true);
+    headerClone.style.height = timeHeader.offsetHeight + 'px';
+    headerClone.style.display = 'flex';
+    headerClone.style.alignItems = 'center';
+    headerClone.style.justifyContent = 'center';
+    headerClone.style.background = '#f8f9fa';
+    headerClone.style.fontWeight = 'bold';
+    headerClone.style.borderRight = '1px solid #dee2e6';
+    headerClone.style.boxShadow = '2px 0 6px -2px rgba(0,0,0,0.08)';
+    floatingCol.appendChild(headerClone);
+
+    // Clone each time cell
+    timeCells.forEach(cell => {
+      const cellClone = cell.cloneNode(true);
+      cellClone.style.height = cell.offsetHeight + 'px';
+      cellClone.style.display = 'flex';
+      cellClone.style.alignItems = 'center';
+      cellClone.style.justifyContent = 'center';
+      cellClone.style.background = '#f8f9fa';
+      cellClone.style.borderRight = '1px solid #dee2e6';
+      cellClone.style.boxShadow = '2px 0 6px -2px rgba(0,0,0,0.08)';
+      floatingCol.appendChild(cellClone);
+    });
+
+    // Add to container
+    tableContainer.appendChild(floatingCol);
+    // Position floating column
+    floatingCol.style.left = scrollContainer.offsetLeft + 'px';
+    floatingCol.style.top = scrollContainer.offsetTop + 'px';
+    floatingCol.style.height = scrollContainer.offsetHeight + 'px';
+    floatingCol.style.position = 'absolute';
+
+    // Sync vertical scroll
+    scrollContainer.addEventListener('scroll', () => {
+      if (scrollContainer.scrollLeft > 0) {
+        floatingCol.style.display = 'block';
+        floatingCol.style.transform = `translateY(${-scrollContainer.scrollTop}px)`;
+      } else {
+        floatingCol.style.display = 'none';
+      }
+    });
+    // Also sync on vertical scroll
+    scrollContainer.addEventListener('scroll', () => {
+      floatingCol.style.transform = `translateY(${-scrollContainer.scrollTop}px)`;
+    });
+    // Initial state
+    if (scrollContainer.scrollLeft > 0) {
+      floatingCol.style.display = 'block';
+    }
   }
 }
 

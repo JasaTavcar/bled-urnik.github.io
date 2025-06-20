@@ -3,6 +3,7 @@ class ConferenceScheduleGenerator {
     this.data = scheduleData;
     this.selectedDays = [];
     this.selectedHalls = [];
+    this.selectedGroups = [];
     this.init();
   }
 
@@ -15,6 +16,7 @@ class ConferenceScheduleGenerator {
   generateFilters() {
     this.generateDayFilter();
     this.generateHallFilter();
+    this.generateGroupFilter();
   }
 
   generateDayFilter() {
@@ -49,26 +51,49 @@ class ConferenceScheduleGenerator {
       const col = document.createElement('div');
       col.className = 'col-md-4 col-lg-3 mb-2';
       
-      const formCheck = document.createElement('div');
-      formCheck.className = 'form-check';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'btn btn-outline-primary hall-filter-btn';
+      button.textContent = hall.name;
+      button.dataset.hallId = hall.id;
+      button.addEventListener('click', () => this.toggleHallFilter(hall.id));
       
-      const input = document.createElement('input');
-      input.className = 'form-check-input';
-      input.type = 'checkbox';
-      input.id = `hall-${hall.id}`;
-      input.dataset.hallId = hall.id;
-      input.addEventListener('change', () => this.toggleHallFilter(hall.id));
-      
-      const label = document.createElement('label');
-      label.className = 'form-check-label';
-      label.htmlFor = `hall-${hall.id}`;
-      label.textContent = hall.name;
-      
-      formCheck.appendChild(input);
-      formCheck.appendChild(label);
-      col.appendChild(formCheck);
+      col.appendChild(button);
       hallFilter.appendChild(col);
     });
+  }
+
+  generateGroupFilter() {
+    const groupFilter = document.getElementById('groupFilter');
+    if (!groupFilter) return;
+    groupFilter.innerHTML = '';
+
+    // Get unique groups across all events
+    const allGroups = new Set();
+    this.data.days.forEach(day => {
+      day.halls.forEach(hall => {
+        hall.events.forEach(event => {
+          if (event.group && event.group.trim() !== '') {
+            allGroups.add(event.group);
+          }
+        });
+      });
+    });
+
+    Array.from(allGroups)
+      .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
+      .forEach(group => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4 col-lg-3 mb-2';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn btn-outline-primary group-filter-btn';
+        button.textContent = group;
+        button.dataset.group = group;
+        button.addEventListener('click', () => this.toggleGroupFilter(group));
+        col.appendChild(button);
+        groupFilter.appendChild(col);
+      });
   }
 
   toggleDayFilter(dayId) {
@@ -86,13 +111,29 @@ class ConferenceScheduleGenerator {
   }
 
   toggleHallFilter(hallId) {
-    const checkbox = document.getElementById(`hall-${hallId}`);
-    if (checkbox.checked) {
-      if (!this.selectedHalls.includes(hallId)) {
-        this.selectedHalls.push(hallId);
-      }
-    } else {
+    const button = document.querySelector(`[data-hall-id="${hallId}"]`);
+    if (this.selectedHalls.includes(hallId)) {
       this.selectedHalls = this.selectedHalls.filter(id => id !== hallId);
+      button.classList.remove('btn-primary');
+      button.classList.add('btn-outline-primary');
+    } else {
+      this.selectedHalls.push(hallId);
+      button.classList.remove('btn-outline-primary');
+      button.classList.add('btn-primary');
+    }
+    this.generateSchedule();
+  }
+
+  toggleGroupFilter(group) {
+    const button = document.querySelector(`[data-group="${group}"]`);
+    if (this.selectedGroups.includes(group)) {
+      this.selectedGroups = this.selectedGroups.filter(g => g !== group);
+      button.classList.remove('btn-primary');
+      button.classList.add('btn-outline-primary');
+    } else {
+      this.selectedGroups.push(group);
+      button.classList.remove('btn-outline-primary');
+      button.classList.add('btn-primary');
     }
     this.generateSchedule();
   }
@@ -136,9 +177,15 @@ class ConferenceScheduleGenerator {
     dayRow.appendChild(titleCol);
 
     // Get halls for this specific day
-    const dayHalls = this.selectedHalls.length > 0
+    let dayHalls = this.selectedHalls.length > 0
       ? day.halls.filter(hall => this.selectedHalls.includes(hall.id))
       : day.halls;
+    // Further filter halls: only keep halls that have at least one event matching the group filter
+    if (this.selectedGroups.length > 0) {
+      dayHalls = dayHalls.filter(hall =>
+        hall.events.some(event => event.group && this.selectedGroups.includes(event.group))
+      );
+    }
 
     if (dayHalls.length === 0) {
       const noHallsCol = document.createElement('div');
@@ -184,11 +231,7 @@ class ConferenceScheduleGenerator {
       const hallHeader = document.createElement('th');
       hallHeader.className = 'hall-column';
       hallHeader.innerHTML = `
-        <div class="hall-header">
-          <div class="hall-name">${hall.name}</div>
-          <small class="text-muted">Capacity: ${hall.capacity}</small>
-        </div>
-      `;
+        <div class=\"hall-header\">\n          <div class=\"hall-name\">${hall.name}</div>\n        </div>\n      `;
       headerRow.appendChild(hallHeader);
     });
     
@@ -200,8 +243,15 @@ class ConferenceScheduleGenerator {
     
     // Generate time slots
     const timeSlots = this.generateTimeSlots();
+    // For each hall, keep track of which time slots are covered by an event
+    const hallCoveredSlots = {};
+    halls.forEach(hall => {
+      hallCoveredSlots[hall.id] = {};
+    });
     
-    timeSlots.forEach(timeSlot => {
+    // For each time slot (row)
+    for (let rowIdx = 0; rowIdx < timeSlots.length; rowIdx++) {
+      const timeSlot = timeSlots[rowIdx];
       const row = document.createElement('tr');
       
       // Time column
@@ -212,30 +262,124 @@ class ConferenceScheduleGenerator {
       
       // Hall columns
       halls.forEach(hall => {
-        const hallCell = document.createElement('td');
-        hallCell.className = 'hall-cell';
-        
-        // Find events for this hall and time slot
-        const events = this.findEventsForTimeSlot(days, hall.id, timeSlot);
-        
-        if (events.length > 0) {
-          events.forEach(event => {
-            const eventElement = this.createEventElement(event);
-            hallCell.appendChild(eventElement);
-          });
+        // If this slot is covered by a previous event, skip rendering a cell
+        if (hallCoveredSlots[hall.id][timeSlot]) {
+          return;
         }
-        
-        row.appendChild(hallCell);
+        // Find if an event starts at this time in this hall
+        let event = this.findEventStartingAt(days, hall.id, timeSlot);
+        // Group filter: skip event if it doesn't match selected groups
+        if (event && this.selectedGroups.length > 0 && (!event.group || !this.selectedGroups.includes(event.group))) {
+          event = null;
+        }
+        if (event) {
+          // Calculate rowspan (number of slots this event covers)
+          const startTime = this.parseTime(event.startTime);
+          const endTime = this.parseTime(event.endTime);
+          const slotDuration = this.data.timeline.interval * 60000;
+          const numSlots = Math.round((endTime - startTime) / slotDuration);
+          // Mark all covered slots for this hall
+          let slotTime = startTime;
+          for (let i = 1; i < numSlots; i++) {
+            slotTime += slotDuration;
+            const coveredSlot = this.formatTime(new Date(slotTime));
+            hallCoveredSlots[hall.id][coveredSlot] = true;
+          }
+          // Render the event cell with rowspan
+          const hallCell = document.createElement('td');
+          hallCell.className = 'hall-cell';
+          hallCell.rowSpan = numSlots;
+          hallCell.appendChild(this.createEventElementWithTime(event));
+          row.appendChild(hallCell);
+        } else {
+          // Render empty cell
+          const hallCell = document.createElement('td');
+          hallCell.className = 'hall-cell';
+          row.appendChild(hallCell);
+        }
       });
-      
       tbody.appendChild(row);
-    });
+    }
     
     table.appendChild(tbody);
     scrollContainer.appendChild(table);
     tableContainer.appendChild(scrollContainer);
     
     return tableContainer;
+  }
+
+  findEventStartingAt(days, hallId, timeSlot) {
+    for (const day of days) {
+      const hall = day.halls.find(h => h.id === hallId);
+      if (hall) {
+        for (const event of hall.events) {
+          if (event.startTime === timeSlot) {
+            return { ...event, day: day.name };
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  createEventElementWithTime(event) {
+    const eventDiv = document.createElement('div');
+    eventDiv.className = `cd-schedule__event event-${event.type}`;
+    eventDiv.style.position = 'relative';
+    eventDiv.style.height = '100%';
+    eventDiv.style.width = '100%';
+    eventDiv.style.display = 'flex';
+    eventDiv.style.flexDirection = 'column';
+    eventDiv.style.alignItems = 'center';
+    eventDiv.style.justifyContent = 'center';
+    eventDiv.style.textAlign = 'center';
+    eventDiv.style.zIndex = '10';
+
+    const eventLink = document.createElement('a');
+    eventLink.href = '#0';
+    eventLink.setAttribute('data-start', event.startTime);
+    eventLink.setAttribute('data-end', event.endTime);
+    eventLink.setAttribute('data-event', event.type);
+    eventLink.setAttribute('data-description', event.description);
+    eventLink.style.height = '100%';
+    eventLink.style.width = '100%';
+    eventLink.style.display = 'flex';
+    eventLink.style.flexDirection = 'column';
+    eventLink.style.alignItems = 'center';
+    eventLink.style.justifyContent = 'center';
+    eventLink.style.textAlign = 'center';
+
+    const eventName = document.createElement('em');
+    eventName.className = 'cd-schedule__name';
+    eventName.textContent = event.name;
+    eventName.style.fontSize = '0.8rem';
+    eventName.style.lineHeight = '1.2';
+    eventName.style.padding = '4px';
+    eventLink.appendChild(eventName);
+
+    // Add subname below the main name if present
+    if (event.subname && event.subname.trim() !== "") {
+      const eventSubname = document.createElement('span');
+      eventSubname.className = 'cd-schedule__subname';
+      eventSubname.textContent = event.subname;
+      eventSubname.style.fontSize = '0.7rem';
+      eventSubname.style.opacity = '0.85';
+      eventSubname.style.lineHeight = '1.1';
+      eventSubname.style.whiteSpace = 'pre-line';
+      eventSubname.style.padding = '2px 4px 0 4px';
+      eventLink.appendChild(eventSubname);
+    }
+
+    if (event.pdf) {
+      eventLink.setAttribute('data-pdf', event.pdf);
+    }
+
+    if (event.link) {
+      eventLink.setAttribute('data-link', event.link);
+    }
+
+    eventDiv.appendChild(eventLink);
+    return eventDiv;
   }
 
   generateTimeSlots() {
@@ -252,61 +396,30 @@ class ConferenceScheduleGenerator {
     return timeSlots;
   }
 
-  findEventsForTimeSlot(days, hallId, timeSlot) {
-    const events = [];
-    
-    days.forEach(day => {
-      const hall = day.halls.find(h => h.id === hallId);
-      if (hall) {
-        hall.events.forEach(event => {
-          if (event.startTime === timeSlot) {
-            events.push({ ...event, day: day.name });
-          }
-        });
-      }
-    });
-    
-    return events;
-  }
-
-  createEventElement(event) {
-    const eventDiv = document.createElement('div');
-    eventDiv.className = `cd-schedule__event event-${event.type}`;
-    
-    const eventLink = document.createElement('a');
-    eventLink.href = '#0';
-    eventLink.setAttribute('data-start', event.startTime);
-    eventLink.setAttribute('data-end', event.endTime);
-    eventLink.setAttribute('data-event', event.type);
-    eventLink.setAttribute('data-description', event.description);
-    
-    const eventName = document.createElement('em');
-    eventName.className = 'cd-schedule__name';
-    eventName.textContent = event.name;
-    
-    eventLink.appendChild(eventName);
-    eventDiv.appendChild(eventLink);
-    
-    return eventDiv;
-  }
-
   setupEventListeners() {
     // Clear filters button
     document.getElementById('clearFilters').addEventListener('click', () => {
       this.selectedDays = [];
       this.selectedHalls = [];
-      
+      this.selectedGroups = [];
       // Reset day buttons
       document.querySelectorAll('#dayFilter .btn').forEach(btn => {
         btn.classList.remove('btn-primary');
         btn.classList.add('btn-outline-primary');
       });
-      
-      // Reset hall checkboxes
-      document.querySelectorAll('#hallFilter input[type="checkbox"]').forEach(checkbox => {
-        checkbox.checked = false;
+      // Reset hall buttons
+      document.querySelectorAll('#hallFilter button').forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline-primary');
       });
-      
+      // Reset group buttons
+      const groupFilter = document.getElementById('groupFilter');
+      if (groupFilter) {
+        groupFilter.querySelectorAll('button').forEach(btn => {
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-outline-primary');
+        });
+      }
       this.generateSchedule();
     });
 
@@ -321,28 +434,45 @@ class ConferenceScheduleGenerator {
       const modal = document.querySelector('.cd-schedule-modal');
       const modalBody = modal.querySelector('.cd-schedule-modal__event-info');
       const modalHeader = modal.querySelector('.cd-schedule-modal__name');
+      const modalDate = modal.querySelector('.cd-schedule-modal__date');
       const closeButton = modal.querySelector('.cd-schedule-modal__close');
       const coverLayer = document.querySelector('.cd-schedule__cover-layer');
 
       events.forEach(event => {
         event.addEventListener('click', (e) => {
+          const linkUrl = event.getAttribute('data-link');
+          const pdfUrl = event.getAttribute('data-pdf');
+          console.log('Clicked event:', { linkUrl, pdfUrl });
+          if (linkUrl) {
+            const urlToOpen = this.resolveUrl(linkUrl);
+            window.open(urlToOpen, '_blank');
+            return;
+          }
+          if (pdfUrl) {
+            const urlToOpen = this.resolveUrl(pdfUrl);
+            window.open(urlToOpen, '_blank');
+            return;
+          }
           e.preventDefault();
           const description = event.getAttribute('data-description');
           const name = event.querySelector('.cd-schedule__name').textContent;
-          
+          const start = event.getAttribute('data-start');
+          const end = event.getAttribute('data-end');
+
           // Update modal content
           modalHeader.textContent = name;
+          modalDate.textContent = `${start} - ${end}`;
           modalBody.innerHTML = `<div>${description}</div>`;
-          
-          // Show modal and cover layer
-          modal.classList.add('cd-schedule-modal--open');
+
+          // Show modal and cover layer, and ensure all CodyHouse classes are set
+          modal.classList.add('cd-schedule-modal--open', 'cd-schedule-modal--animation-completed', 'cd-schedule-modal--content-loaded');
           coverLayer.classList.add('cd-schedule__cover-layer--visible');
         });
       });
 
       // Close modal when clicking the close button or cover layer
       const closeModal = () => {
-        modal.classList.remove('cd-schedule-modal--open');
+        modal.classList.remove('cd-schedule-modal--open', 'cd-schedule-modal--animation-completed', 'cd-schedule-modal--content-loaded');
         coverLayer.classList.remove('cd-schedule__cover-layer--visible');
       };
 
@@ -364,6 +494,18 @@ class ConferenceScheduleGenerator {
 
   formatTime(date) {
     return date.toTimeString().slice(0, 5);
+  }
+
+  resolveUrl(url) {
+    if (/^https?:\/\//i.test(url)) {
+      return url; // Absolute URL
+    }
+    if (url.startsWith('/')) {
+      // Root-relative path
+      return window.location.origin + url;
+    }
+    // Relative path (relative to current page)
+    return window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/') + url;
   }
 }
 

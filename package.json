@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "codyhouse-framework": "^3.0.14"
+  },
+  "name": "bled-urnik.github.io",
+  "description": "A simple template that lets you display events on a timeline, as well as organize them in groups (week days, conference rooms etc…).",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasaTavcar/bled-urnik.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JasaTavcar/bled-urnik.github.io/issues"
+  },
+  "homepage": "https://github.com/JasaTavcar/bled-urnik.github.io#readme",
+  "devDependencies": {
+    "node-sass": "^4.14.1"
+  }
+}

@@ -46,21 +46,23 @@ class ConferenceScheduleGenerator {
       });
     });
 
-    allHalls.forEach(hallStr => {
-      const hall = JSON.parse(hallStr);
-      const col = document.createElement('div');
-      col.className = 'col-md-4 col-lg-3 mb-2';
-      
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'btn btn-outline-primary hall-filter-btn';
-      button.textContent = hall.name;
-      button.dataset.hallId = hall.id;
-      button.addEventListener('click', () => this.toggleHallFilter(hall.id));
-      
-      col.appendChild(button);
-      hallFilter.appendChild(col);
-    });
+    Array.from(allHalls)
+      .map(hallStr => JSON.parse(hallStr))
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }))
+      .forEach(hall => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4 col-lg-3 mb-2';
+        
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn btn-outline-primary hall-filter-btn';
+        button.textContent = hall.name;
+        button.dataset.hallId = hall.id;
+        button.addEventListener('click', () => this.toggleHallFilter(hall.id));
+        
+        col.appendChild(button);
+        hallFilter.appendChild(col);
+      });
   }
 
   generateGroupFilter() {

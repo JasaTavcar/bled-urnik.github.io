@@ -159,6 +159,9 @@ class ConferenceScheduleGenerator {
       const daySection = this.createDaySection(day);
       container.appendChild(daySection);
     });
+
+    // Re-initialize event handlers after schedule regeneration
+    this.initializeEventHandlers();
   }
 
   createDaySection(day) {
@@ -588,4 +591,4 @@ class ConferenceScheduleGenerator {
 // Initialize when the page is fully loaded
 window.addEventListener('load', () => {
   const generator = new ConferenceScheduleGenerator(scheduleData);
-}); 
+});

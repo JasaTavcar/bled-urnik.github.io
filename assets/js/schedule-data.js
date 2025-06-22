@@ -6,248 +6,6 @@ const scheduleData = {
   },
   days: [
     {
-      id: "day0",
-      name: "Sunday",
-      date: "2024-06-22",
-      halls: [
-        {
-          id: "FESTIVAL HALL A",
-          name: "FESTIVAL HALL A",
-          events: [
-            {
-              id: "0-0-0",
-              name: "hall opening",
-              subname: "",
-              group: "",
-              startTime: "07:00",
-              endTime: "07:30",
-              type: "info",
-              description: ""
-            },
-            {
-              id: "0-0-1",
-              name: "stream, sound, electronics, stage set-up",
-              subname: "",
-              group: "",
-              startTime: "07:30",
-              endTime: "10:00",
-              type: "info",
-              description: ""
-            },
-            {
-              id: "0-0-2",
-              name: "stream, sound, stage test with ensemble",
-              subname: "",
-              group: "",
-              startTime: "10:00",
-              endTime: "12:00",
-              type: "soundcheck",
-              description: ""
-            },
-            {
-              id: "0-0-3",
-              name: "buffer",
-              subname: "",
-              group: "",
-              startTime: "12:00",
-              endTime: "12:30",
-              type: "soundcheck",
-              description: ""
-            },
-            {
-              id: "0-0-4",
-              name: "hall closing",
-              subname: "",
-              group: "",
-              startTime: "12:30",
-              endTime: "13:00",
-              type: "info",
-              description: ""
-            }
-          ]
-        },
-        {
-          id: "FESTIVAL HALL C",
-          name: "FESTIVAL HALL C",
-          events: [
-            {
-              id: "0-0-0",
-              name: "hall opening",
-              subname: "",
-              group: "",
-              startTime: "07:00",
-              endTime: "07:30",
-              type: "info",
-              description: ""
-            },
-            {
-              id: "0-0-1",
-              name: "hall set-up",
-              subname: "",
-              group: "",
-              startTime: "07:30",
-              endTime: "08:30",
-              type: "info",
-              description: ""
-            },
-            {
-              id: "0-0-2",
-              name: "REHEARSAL",
-              subname: "percept.concept.percept \n Group C",
-              group: "C",
-              startTime: "08:30",
-              endTime: "15:00",
-              type: "rehersal",
-              description: ""
-            },
-            {
-              id: "0-0-3",
-              name: "REHEARSAL",
-              subname: "percept.concept.percept \n Group A",
-              group: "A",
-              startTime: "18:00",
-              endTime: "19:00",
-              type: "rehersal",
-              description: ""
-            },
-            {
-              id: "0-0-4",
-              name: "hall closing",
-              subname: "",
-              startTime: "19:00",
-              endTime: "19:30",
-              type: "info",
-              description: ""
-            }
-          ] 
-        },
-        {
-          id: "IEDC library",
-          name: "IEDC library",
-          events: [
-            {
-              id: "0-0-0",
-              name: "space opening, set-up",
-              subname: "",
-              group: "",
-              startTime: "08:00",
-              endTime: "08:30",
-              type: "info",
-              description: ""
-            },
-            {
-              id: "0-0-1",
-              name: "REHERSAL",
-              subname: "percept.concept.percept \n Group B",
-              group: "B",
-              startTime: "08:30",
-              endTime: "15:00",
-              type: "rehersal",
-              description: ""
-            },
-            {
-              id: "0-0-2",
-              name: "REHERSAL",
-              subname: "percept.concept.percept \n Group B",
-              group: "B",
-              startTime: "18:00",
-              endTime: "19:00",
-              type: "rehersal",
-              description: ""
-            },
-            {
-              id: "0-0-3",
-              name: "hall closing",
-              subname: "",
-              group: "",
-              startTime: "19:00",
-              endTime: "19:30",
-              type: "info",
-              description: ""
-            }
-          ]
-        },
-        {
-          id: "MG center",
-          name: "MG center",
-          events: [
-            {
-              id: "0-0-0",
-              name: "space opening, set-up",
-              subname: "",
-              group: "",
-              startTime: "08:00",
-              endTime: "08:30",
-              type: "info",
-              description: ""
-            },
-            {
-              id: "0-0-1",
-              name: "REHERSAL",
-              subname: "percept.concept.percept \n Group A",
-              group: "A",
-              startTime: "08:30",
-              endTime: "15:00",
-              type: "rehersal",
-              description: ""
-            },
-            {
-              id: "0-0-2",
-              name: "REHERSAL",
-              subname: "percept.concept.percept \n Group C",
-              group: "C",
-              startTime: "18:00",
-              endTime: "19:00",
-              type: "rehersal",
-              description: ""
-            },
-            {
-              id: "0-0-3",
-              name: "space closing",
-              subname: "",
-              group: "",
-              startTime: "19:00",
-              endTime: "19:30",
-              type: "info",
-              description: ""
-            }
-          ]
-        },
-        {
-          id: "ST. MARTIN'S CHURCH",
-          name: "ST. MARTIN'S CHURCH",
-          events: [
-            {
-              id: "0-0-0",
-              name: "PRE-FESTIVAL EVENT",
-              subname: "",
-              group: "",
-              startTime: "16:00",
-              endTime: "18:00",
-              type: "event",
-              description: ""
-            }
-          ]
-        },
-        {
-          id: "BLED ISLAND",
-          name: "BLED ISLAND",
-          events: [
-            {
-              id: "0-0-0",
-              name: "PRE-FESTIVAL EVENT",
-              subname: "",
-              group: "",
-              startTime: "16:00",
-              endTime: "18:00",
-              type: "event",
-              description: ""
-            }
-          ]
-        },
-      ]
-    },
-    {
       id: "day1",
       name: "Monday",
       date: "2024-06-23",
@@ -289,7 +47,7 @@ const scheduleData = {
             {
               id: "0-0-3",
               name: "SOUNDCHECKS",
-              subname: "percept.concept.percept \n .abeceda [String Quartet] \n\n click for schedule",
+              subname: "precept.concept.percept \n\n .abeceda [String Quartet] \n\n click for schedule",
               group: "",
               startTime: "12:00",
               endTime: "16:00",
@@ -310,7 +68,7 @@ const scheduleData = {
             {
               id: "0-0-5",
               name: "CONCERT",
-              subname: "percept.concept.percept \n\n click for schedule",
+              subname: "precept.concept.percept \n\n click for program",
               group: "",
               startTime: "17:00",
               endTime: "18:30",
@@ -331,7 +89,7 @@ const scheduleData = {
             {
               id: "0-0-7",
               name: "CONCERTS",
-              subname: ".abeceda [New Music Ensemble] \n .abeceda [String Quartet] \n\n click for schedule",
+              subname: ".abeceda [New Music Ensemble] \n\n.abeceda [String Quartet] \n\n click for program",
               group: "",
               startTime: "19:00",
               endTime: "23:00",
@@ -368,7 +126,7 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "lecturers projection and audio test",
-              subname: "please arrange with maj in advance",
+              subname: "please arrange with Maj in advance",
               group: "",
               startTime: "11:00",
               endTime: "13:00",
@@ -446,7 +204,7 @@ const scheduleData = {
               name: "hall set-up",
               subname: "",
               group: "",
-              startTime: "07:30",
+              startTime: "07:30", 
               endTime: "08:00",
               type: "info",
               description: ""
@@ -454,7 +212,7 @@ const scheduleData = {
             {
               id: "0-0-2",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group C \n\n click for schedule",
+              subname: "precept.concept.percept \n Group C \n\n click for schedule",
               group: "C",
               startTime: "08:00",
               endTime: "14:00",
@@ -475,7 +233,7 @@ const scheduleData = {
             {
               id: "0-0-4",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group A",
+              subname: "precept.concept.percept \n Group A \n\n click for schedule",
               group: "A",
               startTime: "19:00",
               endTime: "22:00",
@@ -514,7 +272,7 @@ const scheduleData = {
               name: "hall set-up",
               subname: "",
               group: "",
-              startTime: "07:30", 
+              startTime: "07:30",
               endTime: "08:00",
               type: "info",
               description: ""
@@ -539,7 +297,16 @@ const scheduleData = {
               type: "rehersal",
               description: ""
             },
-            
+            {
+              id: "0-0-4",
+              name: "INDIVIDUAL PRACTICE",
+              subname: "click to book a time slot",
+              group: "",
+              startTime: "14:00",
+              endTime: "15:00",
+              type: "individual-rehersal",
+              description: "",
+            },
             {
               id: "0-0-4",
               name: "piano tuning",
@@ -579,7 +346,7 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group B \n\n click for schedule",
+              subname: "precept.concept.percept \n Group B \n\n click for schedule",
               group: "B",
               startTime: "08:00",
               endTime: "14:00",
@@ -590,12 +357,13 @@ const scheduleData = {
             {
               id: "0-0-2",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "14:00",
               endTime: "15:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-3",
@@ -646,12 +414,13 @@ const scheduleData = {
             {
               id: "0-0-3",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "14:00",
               endTime: "15:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-4",
@@ -702,12 +471,13 @@ const scheduleData = {
             {
               id: "0-0-3",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "12:00",
               endTime: "15:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-4",
@@ -738,17 +508,18 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "08:30",
               endTime: "09:30",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-2",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group A \n\n click for schedule",
+              subname: "precept.concept.percept \n Group A \n\n click for schedule",
               group: "A",
               startTime: "09:30",
               endTime: "14:00",
@@ -813,7 +584,7 @@ const scheduleData = {
             {
               id: "0-0-2",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group A \n\n click for schedule",
+              subname: "precept.concept.percept \n Group A \n\n click for schedule",
               group: "A",
               startTime: "08:00",
               endTime: "11:00",
@@ -834,7 +605,7 @@ const scheduleData = {
             {
               id: "0-0-4",
               name: "SOUNDCHECKS",
-              subname: "percept.concept.percept \n .abeceda [String Quartet] \n .abeceda [New Music Ensemble] \n\n click for schedule",
+              subname: "precept.concept.percept \n .abeceda [String Quartet] \n .abeceda [New Music Ensemble] \n\n click for schedule",
               group: "",
               startTime: "13:00",
               endTime: "17:00",
@@ -845,7 +616,7 @@ const scheduleData = {
             {
               id: "0-0-5",
               name: "CONCERT",
-              subname: "percept.concept.percept \n\n click for program",
+              subname: "precept.concept.percept \n\n click for program",
               group: "",
               startTime: "17:00",
               endTime: "18:30",
@@ -869,7 +640,7 @@ const scheduleData = {
               subname: ".abeceda [String Quartet] \n .abeceda [New Music Ensemble] \n\n click for program",
               group: "",
               startTime: "19:00",
-              endTime: "22:30",
+              endTime: "23:00",
               type: "event",
               description: "",
               link: "https://abeceda.io/Bled-Contemporary-Music-Week/"
@@ -898,6 +669,16 @@ const scheduleData = {
               startTime: "07:00",
               endTime: "07:30",
               type: "info",
+            },
+            {
+              id: "0-0-1",
+              name: "hall set-up",
+              subname: "",
+              group: "",
+              startTime: "07:30",
+              endTime: "08:00",
+              type: "info",
+              description: ""
             },
             {
               id: "0-0-2",
@@ -988,7 +769,7 @@ const scheduleData = {
             {
               id: "0-0-3",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group A \n\n click for schedule",
+              subname: "precept.concept.percept \n Group A \n\n click for schedule",
               group: "A",
               startTime: "11:30",
               endTime: "13:30",
@@ -1009,7 +790,7 @@ const scheduleData = {
             {
               id: "0-0-5",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group A \n\n click for schedule",
+              subname: "precept.concept.percept \n Group A \n\n click for schedule",
               group: "A",
               startTime: "19:00",
               endTime: "22:00",
@@ -1112,7 +893,7 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group B \n\n click for schedule",
+              subname: "precept.concept.percept \n Group B \n\n click for schedule",
               group: "B",
               startTime: "08:00",
               endTime: "14:00",
@@ -1184,7 +965,7 @@ const scheduleData = {
               startTime: "14:00",
               endTime: "17:30",
               type: "rehersal",
-              description: ""
+              description: "",
             },
             {
               id: "0-0-4",
@@ -1215,20 +996,21 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "08:00",
-              endTime: "17:00",
+              endTime: "17:30",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-2",
               name: "space closing",
               subname: "",
               group: "",
-              startTime: "17:00",
-              endTime: "17:30",
+              startTime: "17:30",
+              endTime: "18:00",
               type: "info",
               description: ""
             }
@@ -1251,7 +1033,7 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group C \n\n click for schedule",
+              subname: "precept.concept.percept \n Group C \n\n click for schedule",
               group: "C",
               startTime: "08:30",
               endTime: "14:00",
@@ -1315,7 +1097,7 @@ const scheduleData = {
             {
               id: "0-0-2",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group C \n\n click for schedule",
+              subname: "precept.concept.percept \n Group C \n\n click for schedule",
               group: "C",
               startTime: "08:00",
               endTime: "12:00",
@@ -1326,7 +1108,7 @@ const scheduleData = {
             {
               id: "0-0-3",
               name:"piano tuning",
-              subname: "",
+              subname: "silence in the hall!",
               group: "",
               startTime: "12:00",
               endTime: "14:00",
@@ -1336,7 +1118,7 @@ const scheduleData = {
             {
               id: "0-0-4",
               name: "SOUNDCHECKS",
-              subname: "precept.concept.percept \n .codex : \n .abeceda [Sound Installation Ensemble] \n .abeceda [Vocal Ensemble] \n\n click for schedule",
+              subname: "precept.concept.percept \n\n .codex : \n .abeceda [Sound Installation Ensemble] \n .abeceda [Vocal Ensemble] \n\n click for schedule",
               group: "",
               startTime: "14:00",
               endTime: "18:00",
@@ -1347,7 +1129,7 @@ const scheduleData = {
             {
               id: "0-0-5",
               name: "CONCERTS",
-              subname: "percept.concept.percept \n\n .codex : \n .abeceda [Sound Installation Ensemble] \n .abeceda [Vocal Ensemble] \n\n click for program",
+              subname: "precept.concept.percept \n\n .codex : \n .abeceda [Sound Installation Ensemble] \n .abeceda [Vocal Ensemble] \n\n click for program",
               group: "",
               startTime: "18:00",
               endTime: "19:30",
@@ -1358,7 +1140,7 @@ const scheduleData = {
             {
               id: "0-0-6",
               name: "CONCERTS",
-              subname: "percept.concept.percept \n\n click for program",
+              subname: "precept.concept.percept \n\n click for program",
               group: "",
               startTime: "19:30",
               endTime: "23:00",
@@ -1456,32 +1238,32 @@ const scheduleData = {
               startTime: "07:30",
               endTime: "08:00",
               type: "info",
-              description: "" 
+              description: ""
             },
             {
               id: "0-0-2",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group A \n\n click for schedule",
+              subname: "precept.concept.percept \n Group A \n\n click for schedule",
               group: "A",
               startTime: "08:00",
               endTime: "12:30",
               type: "rehersal",
               description: "",
-              pdf: "assets/pdfs/5.pdf"
+              pdf: "assets/pdfs/6.pdf"
             },
             {
               id: "0-0-3",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group C \n\n click for schedule",
-              group: "",
+              subname: "precept.concept.percept \n Group C \n\n click for schedule",
+              group: "C",
               startTime: "12:30",
               endTime: "14:30",
               type: "rehersal",
               description: "",
-              pdf: "assets/pdfs/5.pdf"
+              pdf: "assets/pdfs/6.pdf"
             },
             {
-              id: "0-0-4",
+              id: "0-0-5",
               name: "hall closing",
               subname: "",
               group: "",
@@ -1519,7 +1301,7 @@ const scheduleData = {
             {
               id: "0-0-2",
               name: "YOUTH WORKSHOP",
-              subname: "'kam gre zvok?'",
+              subname: "'Kam gre zvok?'",
               group: "",
               startTime: "09:00",
               endTime: "12:00",
@@ -1527,7 +1309,7 @@ const scheduleData = {
               description: "",
             },
             {
-              id: "0-0-3",
+              id: "0-0-2",
               name: "YOUTH WORKSHOP",
               subname: "'Vstopi v sodobno glasbo'",
               group: "",
@@ -1536,6 +1318,16 @@ const scheduleData = {
               type: "event",
               description: "",
             },
+            {
+              id: "0-0-3",
+              name: "hall closing",
+              subname: "",
+              group: "",
+              startTime: "23:00",
+              endTime: "23:30",
+              type: "info",
+              description: ""
+            }
           ]
         },
         {
@@ -1614,7 +1406,7 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "REHEARSAL",
-              subname: "percept.concept.percept \n Group B \n\n click for schedule",
+              subname: "precept.concept.percept \n Group B \n\n click for schedule",
               group: "B",
               startTime: "08:00",
               endTime: "15:00",
@@ -1625,12 +1417,13 @@ const scheduleData = {
             {
               id: "0-0-2",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "15:00",
               endTime: "16:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-3",
@@ -1727,20 +1520,21 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "08:00",
-              endTime: "16:00",
+              endTime: "15:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
-              id: "0-0-5",
+              id: "0-0-2",
               name: "space closing",
               subname: "",
               group: "",
-              startTime: "16:00",
-              endTime: "16:30",
+              startTime: "15:00",
+              endTime: "15:30",
               type: "info",
               description: ""
             }
@@ -1967,7 +1761,7 @@ const scheduleData = {
             {
               id: "0-0-4",
               name: "REHERSAL",
-              subname: "percept.concept.percept \n Group C \n\n click for schedule",
+              subname: "precept.concept.percept \n Group C \n\n click for schedule",
               group: "C",
               startTime: "19:30",
               endTime: "21:30",
@@ -2069,13 +1863,14 @@ const scheduleData = {
             },
             {
               id: "0-0-2",
-              name: "individual practice",
-              subname: "Please book a practice room in advance",
+              name: "INDIVIDUAL PRACTICE",
+              subname: "click to book a time slot",
               group: "",
               startTime: "14:00",
               endTime: "15:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-3",
@@ -2127,12 +1922,13 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "08:00",
               endTime: "18:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-2",
@@ -2163,12 +1959,13 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "08:00",
               endTime: "18:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-2",
@@ -2253,7 +2050,7 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "SOUNDCHECKS",
-              subname: ".codex: \n .codex – \n .abeceda [Disciplinary Improvisation Ensemble] \n .abeceda [Recorder Ensemble] \n .abeceda [Composers’ Forum] \n\n precept.concept.percept \n click for schedule",
+              subname: ".codex: \n .codex – \n .abeceda [Disciplinary Improvisation Ensemble] \n .abeceda [Recorder Ensemble] \n .abeceda [Composers' Forum] \n\n precept.concept.percept \n click for schedule",
               group: "",
               startTime: "09:00",
               endTime: "12:00",
@@ -2275,7 +2072,7 @@ const scheduleData = {
             {
               id: "0-0-3",
               name: "CONCERT",
-              subname: ".codex: \n\n .abeceda [Recorder Ensemble] \n .abeceda [Composers’ Forum] \n .abeceda [Disciplinary Improvisation Ensemble] \n\n click for program",
+              subname: ".codex: \n\n .abeceda [Recorder Ensemble] \n .abeceda [Composers' Forum] \n .abeceda [Disciplinary Improvisation Ensemble] \n\n click for program",
               group: "",
               startTime: "14:00",
               endTime: "16:00",
@@ -2439,17 +2236,18 @@ const scheduleData = {
             {
               id: "0-0-2",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "08:00",
               endTime: "10:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-3",
               name: "REHERSAL",
-              subname: ".codex – \n .abeceda [Composers’ Forum]",
+              subname: ".codex – \n .abeceda [Composers' forum]",
               group: "",
               startTime: "10:00",
               endTime: "13:00",
@@ -2551,12 +2349,13 @@ const scheduleData = {
             {
               id: "0-0-2",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "14:00",
               endTime: "15:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-3",
@@ -2587,12 +2386,13 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "08:00",
               endTime: "15:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-2",
@@ -2623,12 +2423,13 @@ const scheduleData = {
             {
               id: "0-0-1",
               name: "INDIVIDUAL PRACTICE",
-              subname: "Please book a practice room in advance",
+              subname: "click to book a time slot",
               group: "",
               startTime: "08:00",
               endTime: "15:00",
               type: "individual-rehersal",
-              description: ""
+              description: "",
+              link: "https://docs.google.com/spreadsheets/d/1IAhptudMKktv8CRNRTpfHJ_4YS0a7phr5G4u7mXQka4/edit?gid=445544009#gid=445544009"
             },
             {
               id: "0-0-2",

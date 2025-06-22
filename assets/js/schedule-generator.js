@@ -433,18 +433,14 @@ class ConferenceScheduleGenerator {
     // Wait for DOM to be updated
     setTimeout(() => {
       const events = document.querySelectorAll('.cd-schedule__event a');
-      const modal = document.querySelector('.cd-schedule-modal');
-      const modalBody = modal.querySelector('.cd-schedule-modal__event-info');
-      const modalHeader = modal.querySelector('.cd-schedule-modal__name');
-      const modalDate = modal.querySelector('.cd-schedule-modal__date');
-      const closeButton = modal.querySelector('.cd-schedule-modal__close');
-      const coverLayer = document.querySelector('.cd-schedule__cover-layer');
+      console.log('Found events:', events.length);
 
       events.forEach(event => {
         event.addEventListener('click', (e) => {
           const linkUrl = event.getAttribute('data-link');
           const pdfUrl = event.getAttribute('data-pdf');
           console.log('Clicked event:', { linkUrl, pdfUrl });
+          
           if (linkUrl) {
             const urlToOpen = this.resolveUrl(linkUrl);
             window.open(urlToOpen, '_blank');
@@ -455,35 +451,10 @@ class ConferenceScheduleGenerator {
             window.open(urlToOpen, '_blank');
             return;
           }
+          // If no link or PDF, do nothing - just prevent default behavior
           e.preventDefault();
-          const description = event.getAttribute('data-description');
-          const name = event.querySelector('.cd-schedule__name').textContent;
-          const start = event.getAttribute('data-start');
-          const end = event.getAttribute('data-end');
-
-          // Update modal content
-          modalHeader.textContent = name;
-          modalDate.textContent = `${start} - ${end}`;
-          modalBody.innerHTML = `<div>${description}</div>`;
-
-          // Show modal and cover layer, and ensure all CodyHouse classes are set
-          modal.classList.add('cd-schedule-modal--open', 'cd-schedule-modal--animation-completed', 'cd-schedule-modal--content-loaded');
-          coverLayer.classList.add('cd-schedule__cover-layer--visible');
         });
       });
-
-      // Close modal when clicking the close button or cover layer
-      const closeModal = () => {
-        modal.classList.remove('cd-schedule-modal--open', 'cd-schedule-modal--animation-completed', 'cd-schedule-modal--content-loaded');
-        coverLayer.classList.remove('cd-schedule__cover-layer--visible');
-      };
-
-      closeButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        closeModal();
-      });
-
-      coverLayer.addEventListener('click', closeModal);
     }, 100);
   }
 

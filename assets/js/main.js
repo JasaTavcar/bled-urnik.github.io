@@ -81,23 +81,8 @@
 	};
 
 	ScheduleTemplate.prototype.initEvents = function() {
-		var self = this;
-		for(var i = 0; i < this.singleEvents.length; i++) {
-			// open modal when user selects an event
-			this.singleEvents[i].addEventListener('click', function(event){
-				event.preventDefault();
-				if(!self.animating) self.openModal(this.getElementsByTagName('a')[0]);
-			});
-		}
-		//close modal window
-		this.modalClose.addEventListener('click', function(event){
-			event.preventDefault();
-			if( !self.animating ) self.closeModal();
-		});
-		this.coverLayer.addEventListener('click', function(event){
-			event.preventDefault();
-			if( !self.animating ) self.closeModal();
-		});
+		// Disabled - custom event handlers are managed by schedule-generator.js
+		// This prevents conflicts between the original CodyHouse handlers and custom handlers
 	};
 
 	ScheduleTemplate.prototype.openModal = function(target) {
@@ -330,37 +315,38 @@
 	var scheduleTemplate = document.getElementsByClassName('js-cd-schedule'),	
 		scheduleTemplateArray = [],
 		resizing = false;
-	if( scheduleTemplate.length > 0 ) { // init ScheduleTemplate objects
-		for( var i = 0; i < scheduleTemplate.length; i++) {
-			(function(i){
-				scheduleTemplateArray.push(new ScheduleTemplate(scheduleTemplate[i]));
-			})(i);
-		}
+	// Disabled - custom schedule generator handles all functionality
+	// if( scheduleTemplate.length > 0 ) { // init ScheduleTemplate objects
+	// 	for( var i = 0; i < scheduleTemplate.length; i++) {
+	// 		(function(i){
+	// 			scheduleTemplateArray.push(new ScheduleTemplate(scheduleTemplate[i]));
+	// 		})(i);
+	// 	}
 
-		window.addEventListener('resize', function(event) { 
-			// on resize - update events position and modal position (if open)
-			if( !resizing ) {
-				resizing = true;
-				(!window.requestAnimationFrame) ? setTimeout(checkResize, 250) : window.requestAnimationFrame(checkResize);
-			}
-		});
+	// 	window.addEventListener('resize', function(event) { 
+	// 		// on resize - update events position and modal position (if open)
+	// 		if( !resizing ) {
+	// 			resizing = true;
+	// 			(!window.requestAnimationFrame) ? setTimeout(checkResize, 250) : window.requestAnimationFrame(checkResize);
+	// 		}
+	// 	});
 
-		window.addEventListener('keyup', function(event){
-			// close event modal when pressing escape key
-			if( event.keyCode && event.keyCode == 27 || event.key && event.key.toLowerCase() == 'escape' ) {
-				for(var i = 0; i < scheduleTemplateArray.length; i++) {
-					scheduleTemplateArray[i].closeModal();
-				}
-			}
-		});
+	// 	window.addEventListener('keyup', function(event){
+	// 		// close event modal when pressing escape key
+	// 		if( event.keyCode && event.keyCode == 27 || event.key && event.key.toLowerCase() == 'escape' ) {
+	// 			for(var i = 0; i < scheduleTemplateArray.length; i++) {
+	// 				scheduleTemplateArray[i].closeModal();
+	// 			}
+	// 		}
+	// 	});
 
-		function checkResize(){
-			for(var i = 0; i < scheduleTemplateArray.length; i++) {
-				scheduleTemplateArray[i].scheduleReset();
-			}
-			resizing = false;
-		};
-	}
+	// 	function checkResize(){
+	// 		for(var i = 0; i < scheduleTemplateArray.length; i++) {
+	// 			scheduleTemplateArray[i].scheduleReset();
+	// 		}
+	// 		resizing = false;
+	// 	};
+	// }
 
 	// Make ScheduleTemplate globally available
 	window.ScheduleTemplate = ScheduleTemplate;

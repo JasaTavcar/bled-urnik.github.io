@@ -425,6 +425,45 @@ class ConferenceScheduleGenerator {
       this.generateSchedule();
     });
 
+    // Collapsible filter functionality
+    const filterToggle = document.getElementById('filterToggle');
+    const filterToggleBtn = document.getElementById('filterToggleBtn');
+    const filterContent = document.getElementById('filterContent');
+    const filterIcon = filterToggleBtn.querySelector('.filter-icon');
+    
+    // Initialize filter state (collapsed by default)
+    let isFilterCollapsed = true;
+    
+    // Set initial state
+    filterContent.classList.add('collapsed');
+    // Don't add rotated class initially - icon should be horizontal when collapsed
+    
+    const toggleFilter = () => {
+      isFilterCollapsed = !isFilterCollapsed;
+      
+      if (isFilterCollapsed) {
+        filterContent.classList.add('collapsed');
+        filterIcon.classList.remove('rotated');
+      } else {
+        filterContent.classList.remove('collapsed');
+        filterIcon.classList.add('rotated');
+      }
+    };
+    
+    // Add click event to both the header and the button
+    filterToggle.addEventListener('click', (e) => {
+      // Don't trigger if clicking on the button itself (to avoid double triggering)
+      if (e.target === filterToggleBtn || filterToggleBtn.contains(e.target)) {
+        return;
+      }
+      toggleFilter();
+    });
+    
+    filterToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent the header click from also triggering
+      toggleFilter();
+    });
+
     // Initialize event handlers after schedule generation
     this.initializeEventHandlers();
   }

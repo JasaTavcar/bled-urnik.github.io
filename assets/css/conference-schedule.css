@@ -291,6 +291,57 @@
   border-color: #0d6efd !important;
 }
 
+/* Collapsible filter styles */
+#filterToggle {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  transition: background-color 0.2s ease;
+}
+
+#filterToggle:hover {
+  background-color: #e9ecef;
+}
+
+#filterContent {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+#filterContent.collapsed {
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.filter-icon {
+  transition: transform 0.3s ease;
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.filter-icon.rotated {
+  transform: rotate(-90deg);
+}
+
+#filterToggleBtn {
+  transition: all 0.2s ease;
+  border-color: #6c757d;
+  color: #6c757d;
+  background-color: transparent;
+}
+
+#filterToggleBtn:hover {
+  background-color: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+
+#filterToggleBtn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+}
+
 /* Hall filter button styling */
 #hallFilter .hall-filter-btn {
   width: 100%;
